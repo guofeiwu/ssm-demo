@@ -183,7 +183,7 @@
 <script type="text/javascript">
 
 
-    var employeeSize;
+    var employeeSize,currentPage;
     $(function () {
         //第一个到第一页
         to_page(1);
@@ -206,9 +206,12 @@
                 .append("编辑");
             //给编辑按钮添加上employee的id值
             editBtn.attr("emp_id",item.empId);
+
             var delBtn = $("<button></button>").addClass("btn btn-danger btn-sm edit_delete")
                 .append($("<span></span>").addClass("glyphicon glyphicon-trash"))
                 .append("删除");
+
+
             var btnTd = $("<td></td>").append(editBtn).append(" ").append(delBtn);
             $("<tr></tr>").append(empIdTd)
                 .append(empNameTd)
@@ -242,12 +245,12 @@
     function build_page_info(result) {
         $("#page_infos_area").empty();
 
-        var currentNum = result.extendm.pageInfo.pageNum;
+        currentPage = result.extendm.pageInfo.pageNum;
         var pages = result.extendm.pageInfo.pages;
         employeeSize = result.extendm.pageInfo.total;
 
         //  当前在第   页,总共   页,一共有  条数据
-        $("#page_infos_area").append("当前在第 " + currentNum + " 页,总共 " + pages + " 页，一共有 " + employeeSize + " 条数据");
+        $("#page_infos_area").append("当前在第 " + currentPage + " 页,总共 " + pages + " 页，一共有 " + employeeSize + " 条数据");
 
     }
 
@@ -354,16 +357,18 @@
         if(!regEmpName.test(empName)){
             show_validate_msg("#inputEmpName","error","用户名为6-16位的英文和数字字符的组合或中文为2-5位");
             return false;
+        }else {
+            show_validate_msg("#inputEmpName","success","");
         }
-        show_validate_msg("#inputEmpName","success","");
 
         var email = $("#inputEmail").val();
         var regEmail = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
         if(!regEmail.test(email)){
             show_validate_msg("#inputEmail","error","邮箱格式不正确");
             return false;
+        }else{
+            show_validate_msg("#inputEmail","error"," ");
         }
-        show_validate_msg("#inputEmail","error"," ");
         return true;
     }
 
@@ -454,6 +459,8 @@
         //显示员工信息
         var emp_id = $(this).attr("emp_id");
 
+        //将emp_id 传递给更新按钮
+        $("#update_employee_btn").attr("emp_id",emp_id);
         get_emp(emp_id);
     });
 
@@ -469,16 +476,75 @@
                 $("#input_update_Email").val(emp.email);
                 $("#empUpdateModal input[name=gender]").val([emp.gender]);
 
-
                 $("#empUpdateModal select").val([emp.dId]);
 
                 //$("#update_select_dept option[value='"+ emp.dId+ "']").attr("selected", true);
-
-
                 console.log(emp.dId);
             }
         });
     }
+
+    //更新按钮点击事件
+    $("#update_employee_btn").click(function () {
+        //1.检验邮箱是否正确
+        var email = $("#input_update_Email").val();
+        var regEmail = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
+        if(!regEmail.test(email)){
+            show_validate_msg("#input_update_Email","error","邮箱格式不正确");
+            return false;
+        }else{
+            show_validate_msg("#input_update_Email","error"," ");
+        }
+        //alert("email:"+email);
+        //获取当前被编辑的员工的id
+        var emp_id = $("#update_employee_btn").attr("emp_id");
+        //alert("employee:"+$("#empUpdatemodal form").serialize());
+
+        //发送ajax更新用户信息
+        /**
+         * 第一种
+         *  org.springframework.web.filter.HiddenHttpMethodFilter 使用这个过滤器，可以将普通的post请求转换为PUT和 DELETE 请求
+           $.ajax({
+           url:"${BASE_PATH}/emp/"+emp_id,
+           type:"POST",
+           data:$("#empUpdatemodal form").serialize()+"&_method=PUT",
+           success:function (result) {
+                //alert("result:"+result.hintMsg);
+
+               //关闭更新模态框
+               $("#empUpdateModal").modal("hide");
+               //回到当前页
+               to_page(currentPage);
+           }
+        });*/
+
+        $.ajax({
+           url:"${BASE_PATH}/emp/"+emp_id,
+           type:"PUT",
+           data:$("#empUpdatemodal form").serialize(),
+           success:function (result) {
+               //alert("result:"+result.hintMsg);
+
+               //关闭更新模态框
+               $("#empUpdateModal").modal("hide");
+               //回到当前页
+               to_page(currentPage);
+           }
+        });
+    });
+    
+    $("#emps_table tbody").on("click",".edit_delete",function () {
+            //alert("delete ..");
+        //获取员工姓名
+        $(this).parents("tr").find("td:eq(1)").val();
+
+        if(confirm("确认删除【"+dd+"】吗？")){
+            $.ajax({
+
+            });
+        }
+    });
+
     
 </script>
 </body>
