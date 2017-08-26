@@ -36,12 +36,12 @@ public class EmployeeSqlProvider {
             sql.VALUES("emp_name", "#{empName,jdbcType=VARCHAR}");
         }
         
-        if (record.getGender() != null) {
-            sql.VALUES("gender", "#{gender,jdbcType=VARCHAR}");
-        }
-        
         if (record.getEmail() != null) {
             sql.VALUES("email", "#{email,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getGender() != null) {
+            sql.VALUES("gender", "#{gender,jdbcType=VARCHAR}");
         }
         
         if (record.getdId() != null) {
@@ -59,8 +59,8 @@ public class EmployeeSqlProvider {
             sql.SELECT("emp_id");
         }
         sql.SELECT("emp_name");
-        sql.SELECT("gender");
         sql.SELECT("email");
+        sql.SELECT("gender");
         sql.SELECT("d_id");
         sql.FROM("tbl_emp");
         applyWhere(sql, example, false);
@@ -87,12 +87,12 @@ public class EmployeeSqlProvider {
             sql.SET("emp_name = #{record.empName,jdbcType=VARCHAR}");
         }
         
-        if (record.getGender() != null) {
-            sql.SET("gender = #{record.gender,jdbcType=VARCHAR}");
-        }
-        
         if (record.getEmail() != null) {
             sql.SET("email = #{record.email,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getGender() != null) {
+            sql.SET("gender = #{record.gender,jdbcType=VARCHAR}");
         }
         
         if (record.getdId() != null) {
@@ -109,8 +109,8 @@ public class EmployeeSqlProvider {
         
         sql.SET("emp_id = #{record.empId,jdbcType=INTEGER}");
         sql.SET("emp_name = #{record.empName,jdbcType=VARCHAR}");
-        sql.SET("gender = #{record.gender,jdbcType=VARCHAR}");
         sql.SET("email = #{record.email,jdbcType=VARCHAR}");
+        sql.SET("gender = #{record.gender,jdbcType=VARCHAR}");
         sql.SET("d_id = #{record.dId,jdbcType=INTEGER}");
         
         EmployeeCriteria example = (EmployeeCriteria) parameter.get("example");
@@ -126,12 +126,12 @@ public class EmployeeSqlProvider {
             sql.SET("emp_name = #{empName,jdbcType=VARCHAR}");
         }
         
-        if (record.getGender() != null) {
-            sql.SET("gender = #{gender,jdbcType=VARCHAR}");
-        }
-        
         if (record.getEmail() != null) {
             sql.SET("email = #{email,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getGender() != null) {
+            sql.SET("gender = #{gender,jdbcType=VARCHAR}");
         }
         
         if (record.getdId() != null) {

@@ -15,9 +15,7 @@ import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.annotations.UpdateProvider;
 import org.apache.ibatis.type.JdbcType;
-import org.springframework.stereotype.Component;
 
-@Component
 public interface DepartmentMapper {
     @SelectProvider(type=DepartmentSqlProvider.class, method="countByExample")
     long countByExample(DepartmentCriteria example);
@@ -74,6 +72,4 @@ public interface DepartmentMapper {
         "where dept_id = #{deptId,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(Department record);
-    List<Department> selectByExampleWithDept(DepartmentCriteria example);
-    Department selectByPrimaryKeyWithDept(Integer deptId);
 }
