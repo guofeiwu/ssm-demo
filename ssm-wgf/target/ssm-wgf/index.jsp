@@ -10,8 +10,6 @@
         pageContext.setAttribute("BASE_PATH", request.getContextPath());
     %>
     <title>员工列表</title>
-
-
     <!--引入jQuery-->
     <script type="text/javascript" src="${BASE_PATH}/static/js/jquery-1.12.4.min.js"></script>
     <!-- 引入bootstarp样式 -->
@@ -233,6 +231,7 @@
 
     //跳转到哪一页
     function to_page(pn) {
+        $("#select_all_check").prop("checked",false);
         $.ajax({
                 url: "${BASE_PATH}/emps",
                 data: "pn=" + pn,

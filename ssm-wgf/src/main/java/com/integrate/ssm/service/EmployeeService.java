@@ -21,7 +21,6 @@ public class EmployeeService {
     public void saveEmp(Employee employee) {
         employeeMapper.insertSelective(employee);
     }
-
     /**
      *  检查用户名是否可用
      * @return  true表示可用，false表示不可用

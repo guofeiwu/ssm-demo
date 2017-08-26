@@ -11,6 +11,16 @@ public class Employee {
 
     private Integer dId;
 
+    private Department department;
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
     public Integer getEmpId() {
         return empId;
     }
