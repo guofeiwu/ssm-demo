@@ -11,6 +11,7 @@ import java.util.List;
  * Created by GuofeiWu on 2017/8/23.
  */
 @Service
+@SuppressWarnings("SpringJavaAutowiringInspection") //加这个注解可以防止 Autowired 的错误警告
 public class DepartmentService {
 
     @Autowired

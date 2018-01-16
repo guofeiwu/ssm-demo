@@ -18,7 +18,7 @@
     </bean>
 
     <!--两个标准配置-->
-    <!--处理springmvc不能处理的清楚，例如静态资源 -->
+    <!--处理springmvc不能处理的请求，例如静态资源 -->
     <mvc:default-servlet-handler></mvc:default-servlet-handler>
     <!--springmvc更高级的一些功能，例如JSR303校验，快捷的Ajax请求，映射动态请求-->
     <mvc:annotation-driven></mvc:annotation-driven>
